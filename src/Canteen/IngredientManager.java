@@ -1,6 +1,5 @@
 package Canteen;
-import java.util.*;
-import java.util.stream.Stream;
+import java.util.*;	
 
 public class IngredientManager {
 	private final static  Scanner scanner = new Scanner(System.in);
@@ -44,6 +43,7 @@ public class IngredientManager {
 			return;
 		}
 		
+		System.out.println("======================= Display Stock =======================");
 		ingredients.values().stream()
 			.sorted((a,b) -> a.getName().compareToIgnoreCase(b.getName()))
 			.forEach(ing ->  System.out.println(
@@ -51,6 +51,8 @@ public class IngredientManager {
 		            + ing.getCurrentStock() + " " + ing.getUnit()
 		            + " (reorder at " + ing.getReorderLevel() + ")"
 		      ));
+		
+		System.out.println("===============================================================================");
 		
 	}
 
@@ -66,12 +68,47 @@ public class IngredientManager {
 	public static void displayLowStock() {
 		ArrayList<Ingredients> lowStock = new ArrayList<>(ingredients.values());
 		
+		if(lowStock.size() == 0) {
+			System.out.println();
+			System.out.println("No low on stock yet! ");
+			System.out.println();
+		}
+		
 		lowStock.stream()
 			.sorted((a,b) -> Double.compare(b.getCurrentStock(), a.getCurrentStock()))
 			.filter(n -> n.getCurrentStock() <= n.getReorderLevel())
 			.forEach(n -> System.out.println("Id: " + n.getId() + " "
 					+ "Name: " + n.getName() + " " + "Stock: " + n.getCurrentStock()));
 		
+	}
+	
+	public static void displayIngMenu() {
+		System.out.println("=================");
+		System.out.println("   INGREDIENTS   ");
+		System.out.println("=================");
+		
+		while(true) {
+			System.out.println("1. Add Ingredients");
+			System.out.println("2. View Ingredients");
+			System.out.println("3. Remove Ingredients");
+			System.out.println("4. Exit");
+			
+			String choice = Exceptions.StringException("Enter Choice: ");
+			
+			if(choice.equalsIgnoreCase("4")) {
+				return;
+			}
+			
+			switch(choice) {
+				case "1" -> addIngredient();
+				case "2" -> viewAllIngredients();
+				case "3" -> {
+					String id = Exceptions.StringException("Enter id: ");
+					removeIng(id);
+				}
+				default -> System.out.println("Invalid Input! ");
+			}
+		}
 	}
 	
 	public static Map<String, Ingredients> getIngredients() {

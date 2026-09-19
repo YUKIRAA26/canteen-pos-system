@@ -13,13 +13,8 @@ public class OrderItem {
 	public void setItemMenu(ItemMenu itemMenu) {this.itemMenu = itemMenu;}
 	public int getQuantity() {return quantity;}
 	public void setQuantity(int quantity) {this.quantity = quantity;}
-	 public double getSubtotal() { return itemMenu.getPrice() * quantity; }
-	 public double totalItem() {
-		 double total = 0;
-		 
-		 total += getSubtotal();
-		 return total;
-	 }
+	public double getSubtotal() { return itemMenu.getPrice() * quantity; }
+
 	
 	  @Override
 	    public String toString() {

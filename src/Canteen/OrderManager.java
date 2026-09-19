@@ -9,22 +9,11 @@ public class OrderManager {
 	public static void addOrder() {
 		List<ItemMenu> menuList = new ArrayList<>(ItemManager.getItemList().values());
 		
-		for(int i = 0; i < menuList.size() ; i++ ) {
-			ItemMenu itemMenu = menuList.get(i);
-			System.out.println((i + 1) + " " +  itemMenu.getName() + " " + itemMenu.getPrice() + "$" );
-		}
 		
-		while(true) {
-			int choice = Exceptions.IntegerException("Enter choice: ");
-			if(choice > menuList.size()) {
-				System.out.println("Invalid Item Choice! ");
-				return;
-			}
-			
-			
+			while(true) {
+
+			ItemMenu selected = selectFromList(menuList, "Enter choice: ");
 			int quantity = Exceptions.IntegerException("Enter quantity: ");
-			
-			ItemMenu selected = menuList.get(choice - 1);
 			
 			
 			if(canFulfillOrder(selected, quantity)) {
@@ -47,7 +36,7 @@ public class OrderManager {
 			    continue;
 			}
 			
-			System.out.println("Succesfully added " + menuList.get(choice - 1).getName() + " " + quantity + "x");
+			System.out.println("Succesfully added " + selected.getName()+ " " + quantity + "x");
 	
 			
 			System.out.print("Do u want to add more? (Y/N): ");
@@ -62,21 +51,9 @@ public class OrderManager {
 			System.out.println("You haven't order yet! ");
 			return;
 		}
-		
-		while(true) {
-			for(int i = 0; i < cart.size();i++) {
-				System.out.println((i + 1) + " " + cart.get(i));			
-			}
-			
-			int choice = Exceptions.IntegerException("Enter Item To Remove: ");
-			if(choice > cart.size()) {
-				System.out.println("item is not identified! ");
-				continue;
-			}
 	
-			cart.remove(choice - 1);
-			break;
-		}
+			OrderItem selected = selectFromList(cart,"Enter item to remove: ");
+			cart.remove(selected);
 		
 		System.out.println("Succesfully removed item! ");
 	}
@@ -87,25 +64,16 @@ public class OrderManager {
 			return;
 		}
 		
-		while(true) {
-			for(int i = 0; i < cart.size();i++) {
-				System.out.println((i + 1) + " " + cart.get(i));			
-			}
-			
-			int choice = Exceptions.IntegerException("Enter Item To Update: ");
-			if(choice > cart.size()) {
-				System.out.println("item is not identified! ");
-				continue;
-			}
+			OrderItem selected = selectFromList(cart,"Enter number to update: ");
 			
 			int newQty = Exceptions.IntegerException("Enter New Quantity: ");
 
-			cart.get(choice - 1).setQuantity(newQty);
-			break;
-		}
+			selected.setQuantity(newQty);
+
 		
 		System.out.println("Succesfully Updated item! ");
 	}
+	
 	
 	private static boolean canFulfillOrder(ItemMenu selected, int quantity) {
 		
@@ -160,6 +128,24 @@ public class OrderManager {
 			case 2 -> removeOrder();
 			default -> System.out.println("Please enter 1-3 only! ");
 		}
+	}
+	
+	public static <T> T selectFromList(List<T> items, String prompt) {
+		for(int i = 0; i < items.size() ; i++ ) {
+			System.out.println((i + 1) + ". " +  items.get(i));
+		}
+		
+		while(true) {
+			int choice = Exceptions.IntegerException(prompt);
+			if(choice >= 1 && choice <= items.size()) {
+				return items.get(choice - 1);
+			}
+			
+			System.out.println("Invalid choice! ");
+		}
+			
+			
+			
 	}
 	
 	public static List<OrderItem> getOrderItem(){

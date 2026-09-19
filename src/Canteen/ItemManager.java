@@ -20,7 +20,7 @@ public class ItemManager {
 		MenuCategory category;
 		while(true) {
 
-			String categoryInput = Exceptions.StringException("Enter Item Category(Meal,Snacks,Drinks): ");
+			String categoryInput = Exceptions.StringException("Enter Item Category(Meals,Snacks,Drinks): ");
 			boolean isValid = Arrays.stream(MenuCategory.values())
 					.anyMatch(c -> c.name().equalsIgnoreCase(categoryInput));
 			

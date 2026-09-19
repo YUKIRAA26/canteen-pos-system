@@ -20,7 +20,7 @@ public class Main {
 				case "2" -> OrderManager.addOrder();
 				case "3" -> OrderManager.displayCart();
 				case "4" -> CheckOut.checkOut();
-				case "6" -> IngredientManager.addIngredient();
+				case "6" -> IngredientManager.displayIngMenu();
 				case "7" -> ItemManager.addMenu();
 				case "8" -> IngredientManager.displayLowStock();
 				
@@ -37,7 +37,7 @@ public class Main {
 		System.out.println("4. Check Out ");
 		System.out.println("5. View Sales Report ");
 		System.out.println("----- ADMIN -----");
-		System.out.println("6. Add Stock (Ingredient)");
+		System.out.println("6. Stock Menu (Ingredient) ");
 		System.out.println("7. Add Menu Item ");
 		System.out.println("8. View Low Stock ");
 		System.out.println("9. Exit");
