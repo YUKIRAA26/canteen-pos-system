@@ -41,13 +41,50 @@ public class Exceptions {
 	public static String StringException(String prompt) {
 		while(true) {
 			System.out.print(prompt);
-			String value = scanner.nextLine();
+			String value = scanner.nextLine().trim();
 			if(value.isBlank()) {
 				System.out.println("Input cannot be blank! ");
 				continue;
 			}
 			
 			return value;
+		}
+	}
+	
+	public static String idChecker(Map<String,?> item,String prompt) {
+		while(true) {
+			String id = StringException(prompt);
+			
+			if(item.containsKey(id)) {
+				System.out.println("ID already exist! ");
+				continue;
+			}
+			return id;
+		}
+	}
+	
+	public static String existingId(Map<String,?> item,String prompt) {
+		while(true) {
+			String id = StringException(prompt);
+			
+			if(!item.containsKey(id)) {
+				System.out.println("ID does not exist! ");
+				continue;
+			}
+			return id;
+		}
+	}
+	
+	public static String nameChecker(Set<String> check, String prompt) {
+		while(true) {
+			String name = StringException(prompt);
+			
+			if(check.contains(name.toLowerCase())) {
+				System.out.println("Name already exist! ");
+				continue;
+			}
+			
+			return name;
 		}
 	}
 	

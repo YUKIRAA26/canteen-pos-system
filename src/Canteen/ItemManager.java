@@ -2,20 +2,13 @@ package Canteen;
 import java.util.*;
 
 public class ItemManager {
-	private static final Scanner scanner = new Scanner(System.in);
 	private static final Map<String,ItemMenu> itemMenu = new HashMap<>();
+	private static final Set<String> menuName = new HashSet<>();
 	
 	public static void addMenu() {
-		String id;
-		while(true) {
-			id = Exceptions.StringException("Enter Item ID: ");
-			if(itemMenu.containsKey(id)) {
-				System.out.println("ID Already Exist! ");
-				continue;
-			}
-			break;
-		}
-		String name = Exceptions.StringException("Enter ItemName Name: ");
+		String id = Exceptions.idChecker(itemMenu, "Enter ID: ");
+		
+		String name = Exceptions.nameChecker(menuName, "Enter ItemName Name: ");
 		
 		MenuCategory category;
 		while(true) {
@@ -54,18 +47,16 @@ public class ItemManager {
 				break;
 			}
 		}
+		menuName.add(name);
 		itemMenu.put(id, new ItemMenu(id,name,category,price,recipe));
 		System.out.println("Succesfully Added Menu! ");
 		
 	}
 	
 	public static void removeMenu() {
-		String id = Exceptions.StringException("Enter Menu ID: ");
-		if(!itemMenu.containsKey(id)) {
-			System.out.println("Menu does not exist! ");
-			return;
-		}
-		itemMenu.remove(id);
+		String id = Exceptions.existingId(itemMenu, "Enter Menu ID: ");
+		ItemMenu removed = itemMenu.remove(id);
+		menuName.remove(removed.getName().toLowerCase());
 		System.out.println("Succesfully removed item! ");
 	}
 	
@@ -92,6 +83,7 @@ public class ItemManager {
 		itemMenu.put("M101", new ItemMenu("101", "Chicken Rice", MenuCategory.MEALS,60,chickenRiceRecipe));
 	}
 	
+
 	
 	public static Map<String, ItemMenu> getItemList(){
 		return itemMenu;

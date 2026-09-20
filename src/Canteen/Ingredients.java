@@ -26,6 +26,9 @@ public class Ingredients {
 	public void setCurrentStock(double currentStock) {this.currentStock = currentStock;}
 	public double getReorderLevel() {return reorderLevel;}
 	public void setReorderLevel(double reorderLevel) {this.reorderLevel = reorderLevel;}
+	public void addStock(double amount) {
+		this.currentStock += amount;
+	}
 	
 	
 	
