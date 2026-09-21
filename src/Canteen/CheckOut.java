@@ -7,6 +7,11 @@ public class CheckOut {
 	
 	public static void checkOut() {
 		
+		if(OrderManager.getOrderItem().isEmpty()) {
+			System.out.println("There's none to check out! ");
+			return;
+		}
+		
 		System.out.println("======================");
 		System.out.println("       CHECK-OUT      ");
 		System.out.println("======================");
@@ -27,7 +32,7 @@ public class CheckOut {
 		char confirm = scanner.nextLine().charAt(0);
 		
 		if(!(Character.toUpperCase(confirm) == 'Y')) {
-			System.out.println("Not enough money! ");
+			
 			return;
 		}
 		
@@ -43,7 +48,12 @@ public class CheckOut {
 			System.out.println("Change: " + change);
 			System.out.println("Thank you for ordering! ");
 			
+			SaveFile.save(OrderManager.getOrderItem(), total);
 			OrderManager.getOrderItem().clear();
+			
+			return;
+		}else {
+			System.out.println("Not enough money! ");
 			return;
 		}
 		
