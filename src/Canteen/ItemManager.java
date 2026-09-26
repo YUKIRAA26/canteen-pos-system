@@ -69,10 +69,18 @@ public class ItemManager {
 			System.out.println("No menu yet! ");
 			return;
 		}
-		
-		itemMenu.values().stream()
-			.sorted((a,b) -> a.getName().compareToIgnoreCase(b.getName()))
-			.forEach(menu -> System.out.println(menu));
+		System.out.println("1. Sort by alphabet ");
+		System.out.println("2. Sort by id");
+		String choice = Exceptions.StringException("Enter choice: ").trim();
+		if(choice.equals("1")) {
+			itemMenu.values().stream()
+				.sorted((a,b) -> a.getName().compareToIgnoreCase(b.getName()))
+				.forEach(n -> System.out.println(n));
+		}else if(choice.equals("2")) {
+			itemMenu.values().stream()
+				.sorted((a,b) -> a.getId().compareTo(b.getId()))
+				.forEach(n -> System.out.println(n));
+		}
 	}
 	
 	private static void seedInitialDataRecipe() {
